@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'iransansxv';
+    src: url('/fonts/iransans/webfont/IRANSansXV.woff') format('woff-variations'),
+        /* will be the standard and works in Safari now */
+    url('/fonts/iransans/webfont/staticfonts/IRANSansX-Regular.woff') format('woff');
+    /* for the other supporting browsers */
+    font-weight: 100 900;
+    font-display: fallback;
+
+}
+
+:root {
+    -moz-font-feature-settings: "ss02";
+    -webkit-font-feature-settings: "ss02";
+    font-feature-settings: "ss02";
+    font-variation-settings: "dots" 8
+}
+
+@layer base {
+    body {
+        font-family: iransansx, tahoma, serif;
+    }
+
+    @supports (font-variation-settings: normal) {
+        body {
+            font-family: 'iransansxv', tahoma, serif;
+        }
+    }
+}

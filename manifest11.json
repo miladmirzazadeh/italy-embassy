@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "Visametric IR",
+    "version": "1.0",
+
+
+    "description": "روبات رزرو قرار ملاقات سایت ویزامتریک",
+    "icons":{
+        "48": "icons/logo-48.png"
+    },
+    "content_scripts":[
+        {
+            "matches": ["*://*.visametric.com/*"],
+            "js":["jquery-3.7.0.min.js","script.js"]
+        }
+    ],
+
+    "permissions": [
+        "webRequest",
+        "<all_urls>"
+    ]
+
+}

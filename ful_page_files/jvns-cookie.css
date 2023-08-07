@@ -1,0 +1,37 @@
+.cookie-jvns {
+    width: 100%;
+    padding: 10px;
+    /*background: rgba(0, 0, 0, 0.85);*/
+    background: #222222e6;
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
+    color: #fff;
+    font-size: 14px;
+    display: none;
+}
+
+.cookie-jvns a {
+    color: #fff !important;
+    font-weight: bold;
+    border-radius: unset;
+}
+
+.cookie-jvns a:hover {
+    background-color: unset;
+}
+@media screen\0 {
+    .cookie-jvns {
+        width: 100%;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.70);
+        /*background: #222222e6;*/
+        position: fixed;
+        bottom: 0;
+        z-index: 9999;
+        color: #fff;
+        font-size: 14px;
+        display: none;
+    }
+
+}

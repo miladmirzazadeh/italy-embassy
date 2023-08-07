@@ -1,0 +1,69 @@
+@media only screen and (max-width: 600px) {
+   #logo{
+		max-width:50% !important;
+   }
+
+   .visaauth{
+   	    font-size: 10px !important;
+   }
+   .description{
+   	    font-size: 12px !important;
+   }
+
+	#header {
+	    /*top: 75px !important;*/
+	}
+
+	.btn-menu {
+	    margin-top: 20px !important;
+	    margin-bottom: 10px !important;
+		z-index: 999 !important;
+		position: relative;
+		display: inline-block; 
+	}
+
+	.buttonstylecss{
+		margin-bottom:20px !important;
+		padding: 12px 20px 12px !important;
+    	font-size: 11px !important;
+	}
+
+	#mainnav-mobi{
+		top: 36px !important;
+	}
+
+	#aydiv, #yildiv{
+		margin: 10px 0 0 0 !important;
+		padding: 0 !important;
+
+	}
+
+	.content{
+		padding-left: 15px !important;
+		padding-right: 15px !important;
+	}
+	
+	 .birthmobile {
+		width: 100% !important; margin-bottom: 10px;
+	 }
+
+	.karsilama-metin {
+    	margin-top: 0vh !important;
+	}
+
+	.karsilama-metin2 {
+    	margin-top: 3vh !important;
+	}
+
+	.topbar{
+    	height: 90px !important;
+	}
+
+	#textacceptcheck{
+		margin-left:13px !important;
+	}
+
+	.payinfo, .pib{
+		margin-left:15px !important;
+	}
+}

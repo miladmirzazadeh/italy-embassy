@@ -1,0 +1,19 @@
+
+  {
+    "manifest_version": 3,
+    "name": "Auto Fill Input",
+    "version": "1.0",
+    "permissions": ["tabs","http://212.90.102.230:5000/", "webRequest","<all_urls>"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {},
+    "content_scripts": [
+      {
+        "matches": ["*://*.visametric.com/*"],
+        "js": ["jquery-3.7.0.min.js","html2canvas.min.js", "content.js"]
+      }
+    ]
+
+  }
+
