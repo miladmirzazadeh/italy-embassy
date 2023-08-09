@@ -60,6 +60,7 @@ if (tokenStatus == 'active' && baseUrl == hrefUrl) {
                 token: userToken
             };
 
+
             // Decode captcha
             function decoder() {
                 $.ajax({
@@ -67,6 +68,20 @@ if (tokenStatus == 'active' && baseUrl == hrefUrl) {
                     type: "post",
                     data: captchaData,
                     success: function (response) {
+                        
+                        let captcha_content = {
+                            html: newCaptcha,
+                            decoded: response
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:5000/save_captcha',
+                            type: 'post',
+                            contentType: 'application/json',
+                            data: JSON.stringify({html: newCaptcha, decoded: response}),
+                        });
+                        console.log("send");
+
                         $('.inputCaptcha').val(response)
                         localStorage.setItem('captcha', response)
                         getUserData()
@@ -910,10 +925,8 @@ function getDate() {
                 mailConfirmCode: localStorage.getItem('mailCode')
             },
             success: function (getvaliddates) {
-                day_list = JSON.parse(getvaliddates);
-                console.log("getvalddates", day_list, day_list.length)
-                
-                if(day_list.length>0){
+
+                if(getvaliddates.length>0){
                     getdateFlag = false;
                 }
                 $(document).ready(function() {

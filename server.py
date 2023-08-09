@@ -16,6 +16,9 @@ from email.header import decode_header
 from bs4 import BeautifulSoup
 import time
 
+
+captcha_number = 0
+
 print("starting")
 app = Flask(__name__)
 
@@ -35,10 +38,6 @@ import os
 import subprocess
 import webbrowser
 import time
-
-
-
-
 import pyautogui
 import time
 
@@ -80,12 +79,12 @@ def bypass_cloudflare():
 @app.route('/open_url_in_chrome', methods=['POST'])
 def open_url_in_chrome():
     close_chrome()
-    time.sleep(2)
+    time.sleep(20)
     url = 'https://it-ir-appointment.visametric.com/en'
     chrome_path = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
     subprocess.Popen([chrome_path, url])
-    bypass_cloudflare()
-    return True#
+    # bypass_cloudflare()
+    return True
     #############3
 
 
@@ -257,6 +256,42 @@ def get_script():
     return script_code
 
 
+
+ 
+
+@app.route('/save_captcha', methods=['POST'])
+
+def save_captcha():
+    data = request.get_json()  # or request.form
+    html = data.get('html')
+    decoded = data.get('decoded')
+    print(html)
+    print("\n\n\n\n\n\n\n")
+    print(decoded)
+    global captcha_number
+    html_file_name = "./captchas/captcha_{}.html".format(captcha_number)
+    decoded_file_name = "./captchas/decoded_{}.txt".format(captcha_number)
+    with open(html_file_name, "w") as file:
+        file.write(html)
+    with open(decoded_file_name, "w") as file:
+        file.write(decoded)
+
+    captcha_number+=1
+    open_url_in_chrome()
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+
 
