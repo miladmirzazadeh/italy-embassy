@@ -15,6 +15,7 @@ import email
 from email.header import decode_header
 from bs4 import BeautifulSoup
 import time
+import json
 
 
 captcha_number = 0
@@ -258,34 +259,45 @@ def get_script():
 
 
  
+from bs4 import BeautifulSoup
+import numpy as np
 
-@app.route('/save_captcha', methods=['POST'])
+def create_array(html):
+    pre = html
+    lines = pre.split('\n')
+    array = []
+    for i, line in enumerate(lines):
+        if line.strip() == '' or '</span>' not in line:
+            continue
+        row = np.zeros(80)
+        spans = line.split('</span>')
+        for j, span in enumerate(spans):
+            if 'font-weight:bold' in span:
+                row[j] = 1
+        array.append(row)
+    return np.array(array)
 
-def save_captcha():
+def decode_character(array, json):
+    char = json[str(array)]
+    return char
+
+def decode_captcha_2(html, json):
+    answer = ""
+    array = create_array(html)
+    for char_num in np.arange(0,8):
+        char_array = array[:, char_num*10: (char_num*10)+10]
+        answer += decode_character(char_array, json)
+    return(answer)
+
+
+@app.route('/decode_captcha', methods=['POST'])
+def decode_captcha():
     data = request.get_json()  # or request.form
     html = data.get('html')
-    decoded = data.get('decoded')
-    print(html)
-    print("\n\n\n\n\n\n\n")
-    print(decoded)
-    global captcha_number
-    html_file_name = "./captchas/captcha_{}.html".format(captcha_number)
-    decoded_file_name = "./captchas/decoded_{}.txt".format(captcha_number)
-    with open(html_file_name, "w") as file:
-        file.write(html)
-    with open(decoded_file_name, "w") as file:
-        file.write(decoded)
-
-    captcha_number+=1
-    open_url_in_chrome()
-
-
-
-
-
-
-
-
+    with open('decoder.json', 'r') as f:
+        decoder_json = json.load(f)
+    decoded = decode_captcha_2(html, decoder_json)
+    return jsonify({"status": "success", "decoded": decoded})
 
 
 if __name__ == '__main__':

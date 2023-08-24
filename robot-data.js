@@ -55,35 +55,22 @@ if (tokenStatus == 'active' && baseUrl == hrefUrl) {
         let spanCount = $(newCaptcha).find('span').length;
         // Check Span Count
         if (spanCount >= 400) {
-            let captchaData = {
-                htmlCaptcha: newCaptcha,
-                token: userToken
-            };
+
 
 
             // Decode captcha
             function decoder() {
                 $.ajax({
-                    url: apiDomain + "decode-captcha",
-                    type: "post",
-                    data: captchaData,
+                    url: 'http://localhost:5000/decode_captcha',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({html: newCaptcha}),
+    
                     success: function (response) {
-                        
-                        let captcha_content = {
-                            html: newCaptcha,
-                            decoded: response
-                        };
-
-                        $.ajax({
-                            url: 'http://localhost:5000/save_captcha',
-                            type: 'post',
-                            contentType: 'application/json',
-                            data: JSON.stringify({html: newCaptcha, decoded: response}),
-                        });
-                        console.log("send");
-
-                        $('.inputCaptcha').val(response)
-                        localStorage.setItem('captcha', response)
+                        var decoded = response.decoded;
+                        console.log(response);
+                        $('.inputCaptcha').val(decoded)
+                        localStorage.setItem('captcha', decoded)
                         getUserData()
                     },
                 });
@@ -93,6 +80,7 @@ if (tokenStatus == 'active' && baseUrl == hrefUrl) {
         }
     });
 }
+
 
 // Get User Data
 function getUserData() {
@@ -288,7 +276,7 @@ function pagesData() {
                         let result0 = $('#result0');
                         result0[0].click();
                     }
-                }, 800);
+                }, 3000);
                 if (ConsularNumber == '1') {
                     if (userDataArray['nationality'] == '1') {
                         $(document).ready(function () {
@@ -392,7 +380,7 @@ function pagesData() {
                         let result0 = $('#result1');
                         result0[0].click();
                     }
-                }, 800);
+                }, 3000);
                 if (ConsularNumber == '1') {
                     if (userDataArray['nationality'] == '1') {
                         $(document).ready(function () {
@@ -500,7 +488,7 @@ function pagesData() {
             }
             setTimeout(function () {
                 clickAfterDelayNationalityVar();
-            }, 3000);
+            }, 10000);
         }
 
         clickAfterDelayNationalityVar();
@@ -802,8 +790,20 @@ function userDataR() {
             let element = $('#btnAppPersonalNext');
             element[0].click();
 
-            console.log("Now call the conf code api");
-            setTimeout(getConfirmationCode, 8000);
+            $(document).ready(function() {
+                $('#previewchk').click();  // Click on the checkbox
+                personCount = $('#totalPerson').val();
+                setTimeout(function () {
+                    let element = $('#btnAppPreviewNext');
+                    element[0].click();
+                getdateFlag=true;}
+                       , 1000);            
+
+            });  // Adjust the delay as needed
+
+
+            // console.log("Now call the conf code api");
+            // setTimeout(getConfirmationCode, 8000);
         }, 5000);
     }
 
@@ -921,14 +921,11 @@ function getDate() {
                 exitid: set_new_exit_office_id,
                 servicetypeid: set_new_service_type_id,
                 calendarType: set_new_calendar_type,
-                totalperson: userDataArray['totalPerson'],
-                mailConfirmCode: localStorage.getItem('mailCode')
+                totalperson:'1',
+
             },
             success: function (getvaliddates) {
 
-                if(getvaliddates.length>0){
-                    getdateFlag = false;
-                }
                 $(document).ready(function() {
                     var recCalElement = $('#recCal');
                     if (recCalElement.length) {
